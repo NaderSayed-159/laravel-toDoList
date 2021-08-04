@@ -41,7 +41,7 @@
     <input value="{{ old('describtion') }}" type="text" name="describtion" class="form-control" id="exampleInputEmail1"  placeholder="Enter email">
   </div>
 
- <input type="hidden" name="adder" value="{{ session('userData')[0]['id'] }}">
+ <input type="hidden" name="adder" value="{{ auth()->user()->id }}">
 
 
 

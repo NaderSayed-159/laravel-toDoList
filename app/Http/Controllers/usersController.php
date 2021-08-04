@@ -7,8 +7,31 @@ use Illuminate\Http\Request;
 
 use App\Models\User;
 
+use DB;
+
 class usersController extends Controller
 {
+
+    // public function __construct()
+    // {
+
+
+    //     $this->middleware('checkAuth', ['except' => ['index', 'login', 'loginIndex']]);
+    // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +39,8 @@ class usersController extends Controller
      */
     public function index()
     {
-        $datadisplay = User::orderby('id', 'desc')->get();
+        // $datadisplay = User::orderby('id', 'desc')->get();
+        $datadisplay = User::with('histasks')->orderby('id', 'desc')->get();
         return view('users.index', ['data' => $datadisplay]);
     }
 
@@ -44,9 +68,9 @@ class usersController extends Controller
                 "name"  => "required|min:3",
                 "email" => "required|email|unique:users",
                 "password" => "required|min:6",
+                "type" => "required|numeric"
             ]
         );
-
 
         $data['password'] = bcrypt($data['password']);
 
@@ -158,12 +182,29 @@ class usersController extends Controller
             "password"  => "required|min:6"
         ]);
 
-        $operat = User::where('email', $data['email'])->get('id');
-        if (auth()->attempt($data, false)) {
 
+
+        $flag = false;
+
+        if ($request->rem_me) {
+
+            $flag = true;
+        }
+
+
+        $operat = User::where('email', $data['email'])->get('id');
+
+
+        if (auth()->attempt($data, $flag)) {
             session()->put('userData', $operat);
 
-            return redirect(url('/tasks'));
+            if (auth()->user()->id = 1) {
+
+                return redirect(url('/users'));
+            } else {
+
+                return redirect(url('/tasks'));
+            }
         } else {
             return redirect(url('/login'));
         }

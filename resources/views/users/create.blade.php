@@ -48,6 +48,16 @@
     <label for="exampleInputPassword1">New Password</label>
     <input value="{{ old('passowrd') }}" type="password"  name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
   </div>
+
+  
+  <div class="form-group">
+    <label for="exampleInputPassword1">Type</label>
+    <select name="type" id="type" class="form-control">
+      <option value="1">Admin</option>
+      <option value="2">Standard</option>
+    </select>
+    {{-- <input value="{{ old('type') }}" type="text"  name="type" class="form-control" id="exampleInputPassword1" placeholder="Type"> --}}
+  </div>
  
   
   <button type="submit" class="btn btn-primary">Submit</button>

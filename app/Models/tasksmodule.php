@@ -18,4 +18,10 @@ class tasksmodule extends Model
         'describtion',
         'adder',
     ];
+
+    public function add_by()
+    {
+
+        return  $this->belongsTo('App\Models\User', 'adder', 'id');
+    }
 }

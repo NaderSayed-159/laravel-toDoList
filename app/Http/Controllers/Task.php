@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 
 use App\Models\tasksmodule;
+use DB;
+use Illuminate\Support\Str;
 
 class Task extends Controller
 {
@@ -17,7 +19,21 @@ class Task extends Controller
     public function index()
     {
 
-        $data = tasksmodule::orderby('id', 'desc')->get();
+        // $data = tasksmodule::where('adder', session()->get('userData')[0]['id'])->get();
+        // $data = tasksmodule::where('adder', session()->get('userData')[0]['id'])->orderby('id', 'desc')->get();
+
+        // $data = DB::table('tasks')
+        //     ->join('users', 'users.id', '=', 'tasks.adder')
+        //     ->select('tasks.*', 'users.id as UserID', 'users.name as userName')
+        //     ->where('adder', session()->get('userData')[0]['id'])
+        //  // ->where('adder', auth()->user()->id)
+        //     ->orderby('id', 'desc')->get();
+
+
+        // $data = tasksmodule::where('adder', auth()->user()->id )->get();
+
+
+        $data = tasksmodule::with('add_by')->where('adder', auth()->user()->id)->get();
 
         return view('tasks.index', ['data' => $data]);
     }

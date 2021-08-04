@@ -1,5 +1,6 @@
 <?php
 
+use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,13 +19,13 @@ Route::get('/', function () {
 });
 
 
-Route::resource('users', 'usersController');
+Route::resource('users', 'usersController')->middleware('checkAuth'); //->middleware('auth');
 
-Route::get('login', 'usersController@loginIndex');
+Route::get('login', 'usersController@loginIndex')->name('login');
 
 Route::post('userLogin', 'usersController@login');
 
 Route::get('logout', 'usersController@logout');
 
 
-Route::resource('tasks', 'Task');
+Route::resource('tasks', 'Task')->middleware('checkAuth');
